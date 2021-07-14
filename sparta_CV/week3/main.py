@@ -7,7 +7,6 @@ facenet = cv2.dnn.readNet('models/deploy.prototxt', 'models/res10_300x300_ssd_it
 model = load_model('models/mask_detector.model')
 
 cap = cv2.VideoCapture('videos/04.mp4')
-
 while True:
     ret, img = cap.read()
 

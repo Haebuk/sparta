@@ -6,7 +6,7 @@ import cv2
 facenet = cv2.dnn.readNet('models/deploy.prototxt', 'models/res10_300x300_ssd_iter_140000.caffemodel')
 model = load_model('models/mask_detector.model')
 
-cap = cv2.VideoCapture('videos/03.mp4') # 안에 다 지우고 0만 넣으면 웹캠으로 나옴
+cap = cv2.VideoCapture('videos/me.mp4') # 안에 다 지우고 0만 넣으면 웹캠으로 나옴
 
 while True:
     ret, img = cap.read()
@@ -47,14 +47,16 @@ while True:
 
         if mask > nomask:
             color = [0,255,0]
+            cv2.putText(img, text='mask: %.2f' % (mask), org=(x1, y1), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=color, thickness=2)
         else:
             color = [0,0,255]
+            cv2.putText(img, text='no mask: %.2f' % (nomask), org=(x1, y1), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=color, thickness=2)
 
-        cv2.putText(img, text='mask: %.2f' % (mask), org=(x1, y1), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(0,255,0), thickness=2)
+        
 
         cv2.rectangle(img, pt1=(x1, y1), pt2=(x2, y2), color=color, thickness=2)
 
         cv2.imshow('result', img)
 
-    if cv2.waitKey(100) == ord('q'):
+    if cv2.waitKey(1) == ord('q'):
         break

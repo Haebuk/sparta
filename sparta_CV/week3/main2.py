@@ -9,7 +9,7 @@ age_list = ['(0, 2)','(4, 6)','(8, 12)','(15, 20)','(25, 32)','(38, 43)','(48, 5
 gender_net = cv2.dnn.readNetFromCaffe('models/deploy_gender.prototxt', 'models/gender_net.caffemodel')
 age_net = cv2.dnn.readNetFromCaffe('models/deploy_age.prototxt', 'models/age_net.caffemodel')
 
-img = cv2.imread('imgs/02.jpg')
+img = cv2.imread('imgs/sd.jpg')
 
 h, w, c = img.shape
 
@@ -44,10 +44,11 @@ for i in range(dets.shape[2]):
     age_index = age_net.forward().squeeze().argmax()
     age = age_list[age_index]
 
-    cv2.putText(img, text='%s, %s' % (gender, age), org=(x1, y1), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(0,255,0), thickness=2)
+    cv2.putText(img, text='%s, %s' % (gender, age), org=(x1, y2), fontFace=cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=(0,255,0), thickness=1)
 
-    cv2.rectangle(img, pt1=(x1, y1), pt2=(x2, y2), color=(255, 0, 0), thickness=2)
+    cv2.rectangle(img, pt1=(x1, y1), pt2=(x2, y2), color=(255, 0, 0), thickness=1)
 
-
+# img_resized = cv2.resize(img, dsize=(500, int(h / w * 500)))
 cv2.imshow('result', img)
+# cv2.imshow('result', img_resized)
 cv2.waitKey(0)
