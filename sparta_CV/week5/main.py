@@ -39,6 +39,17 @@ output_bgr = output_bgr * 255
 output_bgr = np.clip(output_bgr, 0, 255) # 255넘는거 자름
 output_bgr = output_bgr.astype('uint8') # 정수형으로 변환
 
+mask = np.zeros_like(img, dtype='uint8')  # 이미지와 같은 형태로 0으로 채움
+mask = cv2.circle(mask, center=(260, 260), radius=200, color=(1, 1, 1), thickness=-1)
+
+color = output_bgr * mask # 컬러로 복원할 부분
+gray = img * (1 - mask) # 컬러로 복원하지 않는 부분
+
+output2 = color + gray
+
+cv2.imshow('result2', output2)
+
 cv2.imshow('img', img)
 cv2.imshow('output', output_bgr)
+cv2.imshow('output2', output2)
 cv2.waitKey(0)
