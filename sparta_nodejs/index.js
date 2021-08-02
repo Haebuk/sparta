@@ -2,15 +2,23 @@ const express = require('express')
 const app = express()
 const port = 3000
 
-const goodsRouter = require('./routes/goods');
-const usersRouter = require('./routes/user');
+const connect = require('./schemas')
+connect();
 
 app.use(express.urlencoded({extended: false})) // 나중에 씀
 app.use(express.json())
 app.use(express.static('public')); // http://localhost:3000/4848.jpg static이 public 폴더안에 동일한 파일이 있는지 체크후 파일 자체를 화면에 응답
 
-app.use('/goods', goodsRouter)
-app.use('/user', usersRouter)
+// const goodsRouter = require('./routes/goods');
+// const usersRouter = require('./routes/user');
+
+const goodsRouter = require("./routers/goods");
+app.use("/api", [goodsRouter]);
+
+
+
+// app.use('/goods', goodsRouter)
+// app.use('/user', usersRouter)
 
 
 // 미들웨어: 요청 전 선처리
@@ -68,6 +76,8 @@ app.get('/', (req, res) => {
 // app.get('/user/register', (req, res) => {
 //   res.send('회원가입 페이지')
 // })
+
+
 
 app.listen(port, () => {
   console.log(`listening at http://localhost:${port}`)
