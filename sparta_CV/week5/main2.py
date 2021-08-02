@@ -1,0 +1,16 @@
+import cv2
+# Super Resolution
+sr = cv2.dnn_superres.DnnSuperResImpl_create()
+sr.readModel('models/EDSR_x3.pb')
+sr.setModel('edsr', 3) # 해상도 3배
+
+img = cv2.imread('imgs/06.jpg')
+
+result = sr.upsample(img) # 이미지 해상도를 세 배 늘린 결과를 result에 저장
+
+resized_img = cv2.resize(img, dsize=None, fx=3, fy=3) # 원본이미지를 세 배 키움
+
+cv2.imshow('img', img)
+cv2.imshow('result', result)
+cv2.imshow('resized_img', resized_img)
+cv2.waitKey(0) 
